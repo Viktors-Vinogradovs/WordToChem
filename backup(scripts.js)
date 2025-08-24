@@ -1,0 +1,13 @@
+function countdown(timeLeft) {
+    function tick() {
+        if (timeLeft <= 0) {
+            document.getElementById('timer').innerHTML = 'Laiks ir beidzies!';
+            window.location.href = '/time_out';
+        } else {
+            document.getElementById('timer').innerHTML = 'Atlikušais laiks: ' + timeLeft + ' sekundes';
+            timeLeft--;
+            setTimeout(tick, 1000);
+        }
+    }
+    tick();
+}

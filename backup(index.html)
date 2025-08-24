@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <title>Ķīmisko Elementu Vārdu Spēle</title>
+    <!-- Viewport meta tag for responsive design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Include the JavaScript file -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Ķīmisko Elementu Vārdu Spēle</h1>
+    <p>Atšifrējiet šādu ķīmisko elementu kombināciju, lai iegūtu vārdu:</p>
+    <div class="elements">{{ element_names|join(' | ') }}</div>
+    <div class="timer" id="timer"></div>
+    <form action="/check_answer" method="post">
+        <input type="text" name="guess" placeholder="Ievadiet vārdu" required>
+        <button type="submit">Iesniegt</button>
+    </form>
+    <br>
+    <a href="/new_game" class="button">Jauna spēle</a>
+</div>
+<script>
+    // Initialize the countdown timer
+    let timeLeft = {{ remaining_time | default(0) }};
+    countdown(timeLeft);
+</script>
+</body>
+</html>

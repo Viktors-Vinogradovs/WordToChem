@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <title>Ķīmisko elementu simboli</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<div class="container fade-in">
+    <h1>🔬 Simbolu Prakse</h1>
+    <p class="subtitle">Kāds ir šī elementa simbols?</p>
+
+    <div class="progress-bar">
+        <div class="progress-fill" style="width: {{ (correct_guesses / 10 * 100) }}%;"></div>
+    </div>
+    <p style="text-align: center; margin-bottom: 20px; color: #666; font-weight: 600;">
+        Progresa: {{ correct_guesses }}/10 pareizās atbildes
+    </p>
+
+    <div class="practice-container">
+        <div class="element-display bounce-in">{{ element_name }}</div>
+
+        {% if session.get('incorrect_answer') %}
+        <div class="feedback">
+            ❌ Pareizais simbols bija: <strong>{{ session.get('correct_symbol') }}</strong>
+        </div>
+        {% endif %}
+
+        <form action="/check_practice_answer" method="post">
+            <input type="hidden" name="correct_guesses" value="{{ correct_guesses }}">
+            <div class="input-container">
+                <input type="text" name="symbol_guess" placeholder="Ievadiet simbolu..." required autofocus>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="primary-button">✓ Pārbaudīt</button>
+                <a href="/new_practice" class="button secondary-button">🔄 Sākt no jauna</a>
+                <a href="/new_game" class="button tertiary-button">🎮 Atpakaļ uz spēli</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

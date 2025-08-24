@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <title>Ķīmisko Elementu Vārdu Spēle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+<div class="container fade-in">
+    <h1>🧪 Ķīmisko Elementu Spēle</h1>
+    <p class="subtitle">Atšifrējiet elementu kombināciju un atrodiet vārdu!</p>
+
+    <div class="game-info">
+        <div class="timer">
+            <div class="timer-icon"></div>
+            <span id="timer">Atlikušais laiks: {{ remaining_time }} sekundes</span>
+        </div>
+        <div class="score">📏 Vārdu garums: {{ element_names|length }}</div>
+    </div>
+
+    <div class="elements-container bounce-in">
+        <div class="elements">
+            {% for name in element_names %}
+            <span class="element-tag">{{ name }}</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <form action="/check_answer" method="post">
+        <div class="input-container">
+            <input type="text" name="guess" id="guessInput" placeholder="Ievadiet vārdu..." required>
+        </div>
+        <div class="button-group">
+            <button type="submit" class="primary-button">🚀 Iesniegt</button>
+            <button type="button" id="pauseButton" class="secondary-button" onclick="togglePause()">⏸️ Pauze</button>
+            <a href="/new_game" class="button tertiary-button">🔄 Jauna spēle</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let timeLeft = {{ remaining_time | default(0) }};
+        countdown(timeLeft);
+        document.getElementById('guessInput').focus();
+    });
+</script>
+</body>
+</html>

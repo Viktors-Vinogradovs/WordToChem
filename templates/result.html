@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezultāts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<div class="container fade-in">
+    <h1>
+        {% if correct %}
+            🎉 Rezultāts
+        {% else %}
+            😔 Rezultāts
+        {% endif %}
+    </h1>
+
+    <div class="message {{ 'correct' if correct else 'incorrect' }} bounce-in">
+        {% if correct %}
+            ✅ {{ message }}
+        {% elif time_out %}
+            ⏰ {{ message }}
+        {% else %}
+            ❌ {{ message }}
+        {% endif %}
+    </div>
+
+    <div class="button-group">
+        {% if correct %}
+            <a href="{{ url_for('new_game') }}" class="button primary-button">🎮 Turpināt spēli</a>
+        {% else %}
+            <a href="{{ url_for('element_symbol_practice') }}" class="button primary-button">🔬 Simbolu prakse</a>
+            <a href="{{ url_for('new_game') }}" class="button secondary-button">🔄 Jauna spēle</a>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
