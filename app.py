@@ -4,8 +4,9 @@ from collections import Counter
 from flask import Flask, render_template, request, session, redirect, url_for
 import pandas as pd
 
+
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with a secure random key
+app.secret_key = os.environ.get("ABC123", "dev-key-change-me")
 
 # Dictionary mapping chemical symbols to their Latvian names
 chemical_symbols_lv = {
@@ -136,8 +137,8 @@ for symbol in chemical_symbols_lv.keys():
     symbols.setdefault(first_letter, []).append(symbol)
 
 def get_resource_path(relative_path):
-    """Get absolute path to resource."""
-    base_path = os.path.abspath(".venv")
+    """Get absolute path to resource relative to this file."""
+    base_path = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(base_path, relative_path)
 
 # New `word_anagram` function to find valid combinations
@@ -188,7 +189,7 @@ def pick_random_word(valid_words):
     return None, None
 
 # Load valid words once at startup
-csv_file = get_resource_path('.venv/Valid_Latvian_Nouns.csv')
+csv_file = get_resource_path('Valid_Latvian_Nouns.csv')
 valid_words = get_valid_words_from_csv(csv_file)
 
 @app.route('/', methods=['GET', 'POST'])
