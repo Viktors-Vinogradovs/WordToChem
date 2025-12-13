@@ -1,5 +1,5 @@
 from app import app
-import aws_wsgi
+import awsgi
 
 def handler(event, context):
-    return aws_wsgi.response(app, event, context)
+    return awsgi.response(app, event, context)
