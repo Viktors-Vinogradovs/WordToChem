@@ -71,13 +71,6 @@ aws-wsgi
 3. **Submit your answer** - Type the word and submit before time runs out
 4. **Practice mode** - If you get it wrong, practice element symbols to improve
 
-### Example Round
-
-```
-Elements shown: Sērs, Kalcijs, Alumīnijs, Titāns, Sērs
-Symbols: S + Ca + Al + Ti + S
-Answer: SCALATIS
-```
 
 ## 📂 Project Structure
 
