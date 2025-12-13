@@ -1,5 +1,11 @@
+from mangum import Mangum
 from app import app
-import awsgi
 
-def handler(event, context):
-    return awsgi.response(app, event, context)
+handler = Mangum(app, lifespan="off")
+```
+
+### File 2: `requirements.txt`
+Create or update this file with:
+```
+Flask==3.0.0
+mangum==0.17.0
