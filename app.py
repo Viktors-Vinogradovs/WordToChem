@@ -1,8 +1,6 @@
 import random
 import os
-from collections import Counter
 from flask import Flask, render_template, request, session, redirect, url_for
-import pandas as pd
 
 
 app = Flask(__name__)
@@ -163,16 +161,16 @@ def word_anagram(word, current_combination=None):
 
     return combinations
 
-def get_valid_words_from_csv(csv_file):
+def get_valid_words_from_file(file_path):
+    """Read valid words from a text file (one word per line)."""
     try:
-        # Read the CSV file
-        df = pd.read_csv(csv_file, header=None, encoding='utf-8')
-        words = df.iloc[:, 0].dropna().astype(str).tolist()
-        # Filter words: remove non-alphabetic characters and convert to lowercase
-        valid_words = [word.strip().lower() for word in words if word.isalpha()]
+        with open(file_path, 'r', encoding='utf-8') as f:
+            words = f.readlines()
+        # Filter words: remove whitespace, convert to lowercase, and keep only alphabetic words
+        valid_words = [word.strip().lower() for word in words if word.strip() and word.strip().isalpha()]
         return valid_words
     except Exception as e:
-        print(f"Error reading CSV file: {e}")
+        print(f"Error reading file: {e}")
         return []
 
 def pick_random_word(valid_words):
@@ -189,8 +187,8 @@ def pick_random_word(valid_words):
     return None, None
 
 # Load valid words once at startup
-csv_file = get_resource_path('Valid_Latvian_Nouns.csv')
-valid_words = get_valid_words_from_csv(csv_file)
+words_file = get_resource_path('Valid_Latvian_Nouns.txt')
+valid_words = get_valid_words_from_file(words_file)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
