@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ķīmisko Elementu Spēle</title>
+  <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+<div class="container fade-in">
+
+  <div class="header-row">
+    <h1>🧪 Ķīmisko Elementu Spēle</h1>
+    <div class="header-controls">
+      <button class="icon-btn" onclick="showHelp()" title="Kā spēlēt?">?</button>
+      <div class="lang-toggle">
+        <button id="btn-lv" class="lang-btn active" onclick="setLanguage('lv')">LV</button>
+        <button id="btn-en" class="lang-btn" onclick="setLanguage('en')">EN</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="subtitle">Atšifrējiet elementu kombināciju un atrodiet vārdu!</p>
+
+  <!-- How to play modal -->
+  <div id="help-modal" class="modal-overlay hidden" onclick="hideHelp()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="hideHelp()">✕</button>
+      <h2 id="modal-title">Kā spēlēt?</h2>
+      <div id="modal-body"></div>
+      <button id="modal-start-btn" class="primary-button" onclick="hideHelp()" style="margin-top:20px;width:100%">Sākt spēli!</button>
+    </div>
+  </div>
+
+  <!-- Game section -->
+  <div id="game-section">
+    <div class="game-info">
+      <div class="timer">
+        <span id="timer">⏱️ Atlikušais laiks: 60 sekundes</span>
+      </div>
+    </div>
+
+    <div class="elements-container bounce-in">
+      <div class="elements" id="elements-display"></div>
+    </div>
+
+    <form onsubmit="checkAnswer(event)">
+      <div class="input-container">
+        <input type="text" id="guessInput" placeholder="Ievadiet vārdu..." autocomplete="off" required>
+      </div>
+      <div class="button-group">
+        <button type="submit" id="submit-btn" class="primary-button">🚀 Iesniegt</button>
+        <button type="button" id="pauseButton" class="secondary-button" onclick="togglePause()">⏸️ Pauze</button>
+        <button type="button" id="new-game-btn" class="tertiary-button" onclick="newGame()">🔄 Jauna spēle</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Result section -->
+  <div id="result-section" class="hidden">
+    <div id="result-message" class="message"></div>
+    <div class="button-group">
+      <button id="continue-btn" class="primary-button" onclick="newGame()">🔄 Jauna spēle</button>
+      <button id="practice-btn" class="secondary-button hidden" onclick="startPractice()">📚 Trenēties</button>
+    </div>
+  </div>
+
+  <!-- Practice section -->
+  <div id="practice-section" class="hidden">
+    <div class="practice-container">
+      <p id="practice-label">Kāds ir šī elementa simbols?</p>
+      <div class="element-display" id="practice-element-name"></div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+      <p id="progress-text" style="text-align:center;color:#3498db;font-weight:600;margin:5px 0 15px">0 / 10</p>
+      <div id="practice-feedback" class="feedback hidden"></div>
+      <form onsubmit="checkPracticeAnswer(event)">
+        <div class="input-container">
+          <input type="text" id="practiceInput" placeholder="..." autocomplete="off" maxlength="3" style="text-align:center">
+        </div>
+        <div class="button-group">
+          <button type="submit" id="check-btn" class="primary-button">✓ Pārbaudīt</button>
+          <button type="button" id="back-btn" class="tertiary-button" onclick="newGame()">↩ Uz spēli</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+<script src="static/script.js"></script>
+</body>
+</html>
