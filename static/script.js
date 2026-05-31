@@ -80,7 +80,7 @@ const WORDS_LV = [
   'futbolists','gabals','gads','gadsimts','gaigala','gailis','gaiss','gaita',
   'gaitenis','galapunkts','galvasauts','galvaskauss','galvassega','galvgalis',
   'galvvirss','gandrene','gani','gans','garaste','garastis','halons','hamburgers',
-  'harmonikas','harta','heks','helikopters','hercogiste','hercogs','hercs','homofobs',
+  'harmonikas','harta','heks','elikopters','hercogiste','hercogs','hercs','homofobs',
   'homofons','homosekss','hostelis','ierocis','iesals','iesnas','iespaids','incis',
   'indiference','indiferentisms','inerce','infarkts','infokiosks','instance',
   'interese','intereses','irbe','irbene','irbulis','irklis','irsis','istaba',
@@ -118,7 +118,7 @@ const WORDS_LV = [
   'onkulis','opaps','opis','ore','osis','osta','ota','pabalsts','pabiras','pacifisms',
   'pacifists','pagalvis','pagasts','pagrabs','pakausis','paksis','pakulas','palags',
   'pali','pamatne','pamatprincips','pamats','pamatskola','panna','pans','pantera',
-  'pants','papagailis','papiross','parabola','parads','paraksts','paralakse','paribe',
+  'pants','papagailis','papiross','parabola','paraksts','paralakse','paribe',
   'parks','paruna','pasaulaina','pase','pasega','pastaiga','pastala','pastalas','pasts',
   'patafons','patekas','patents','patina','pauna','pavards','pavasaris','peri',
   'periods','perons','persona','pestelis','pfu','piesis','piesta','piga','pikpauna',
@@ -371,18 +371,19 @@ function pickRandomWord() {
 
 const T = {
   lv: {
+    title: '🧪 Ķīmisko Elementu Spēle',
     subtitle: 'Atšifrējiet elementu kombināciju un atrodiet vārdu!',
     timerPrefix: 'Atlikušais laiks: ',
     timerSuffix: ' sekundes',
     timerWarning: '⚠️ Atlikušais laiks: ',
     timerOut: '⏰ Laiks beidzies!',
     placeholder: 'Ievadiet vārdu...',
-    submit: '🚀 Iesniegt',
+    submit: 'Iesniegt',
     pause: '⏸️ Pauze',
     resume: '▶️ Atsākt',
     newGame: '🔄 Jauna spēle',
     correct: 'Pareizi! Jūs uzminējāt vārdu! 🎉',
-    wrong: w => `Nepareizi! Pareizais vārds bija "${w.toUpperCase()}". 😅`,
+    wrong: w => `Nepareizi! Pareizais vārds bija "${w.toUpperCase()}".`,
     timeout: w => `Laiks beidzies! Pareizais vārds bija "${w.toUpperCase()}". ⏰`,
     practiceBtn: '📚 Trenēties',
     practiceLabel: 'Kāds ir šī elementa simbols?',
@@ -406,18 +407,19 @@ const T = {
     startBtn: 'Sākt spēli!'
   },
   en: {
+    title: '🧪 Chemical Elements Game',
     subtitle: 'Decode the element combination and find the word!',
     timerPrefix: 'Time left: ',
     timerSuffix: ' seconds',
     timerWarning: '⚠️ Time left: ',
     timerOut: '⏰ Time\'s up!',
     placeholder: 'Type the word...',
-    submit: '🚀 Submit',
+    submit: 'Submit',
     pause: '⏸️ Pause',
     resume: '▶️ Resume',
     newGame: '🔄 New game',
     correct: 'Correct! You guessed the word! 🎉',
-    wrong: w => `Wrong! The correct word was "${w.toUpperCase()}". 😅`,
+    wrong: w => `Wrong! The correct word was "${w.toUpperCase()}".`,
     timeout: w => `Time's up! The correct word was "${w.toUpperCase()}". ⏰`,
     practiceBtn: '📚 Practice',
     practiceLabel: 'What is the symbol for this element?',
@@ -474,6 +476,8 @@ function setLanguage(newLang) {
 function updateLangUI() {
   document.getElementById('btn-lv').classList.toggle('active', lang === 'lv');
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.querySelector('h1').textContent = t('title');
+  document.title = lang === 'lv' ? 'Ķīmisko Elementu Spēle' : 'Chemical Elements Game';
   document.querySelector('.subtitle').textContent = t('subtitle');
   document.getElementById('guessInput').placeholder = t('placeholder');
   document.getElementById('submit-btn').textContent = t('submit');
@@ -536,12 +540,25 @@ function newGame() {
   document.getElementById('guessInput').focus();
 }
 
+function sameElementMultiset(combo1, combo2) {
+  if (combo1.length !== combo2.length) return false;
+  return [...combo1].sort().join(',') === [...combo2].sort().join(',');
+}
+
+function isAlternativeAnswer(guess) {
+  const words = lang === 'lv' ? validWordsLV : validWordsEN;
+  if (!words.includes(guess)) return false;
+  const combos = wordAnagram(guess, getElements(), getMemoKey());
+  if (!combos) return false;
+  return combos.some(c => sameElementMultiset(c, currentCombo));
+}
+
 function checkAnswer(e) {
   e.preventDefault();
   const guess = document.getElementById('guessInput').value.trim().toLowerCase();
   stopTimer();
 
-  if (guess === currentWord) {
+  if (guess === currentWord || isAlternativeAnswer(guess)) {
     showResult(t('correct'), true, false);
   } else {
     showResult(t('wrong', currentWord), false, false);

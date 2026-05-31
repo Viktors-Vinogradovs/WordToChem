@@ -494,7 +494,6 @@ pants
 papagailis
 papiross
 parabola
-parads
 paraksts
 paralakse
 paribe
@@ -581,7 +580,6 @@ pupa
 pupi
 puplaksis
 pups
-puputis
 puravs
 purene
 purns
@@ -903,4 +901,3 @@ veste
 vikontese
 vikonts
 virsus
-
