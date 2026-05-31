@@ -4,7 +4,7 @@ A fun and educational word puzzle game where players decode chemical element com
 
 ## Play Now
 
-**Live Demo:** [AWS Lambda](https://ugivkxyzf4vyfay4a2h3vvrnma0aanfc.lambda-url.eu-north-1.on.aws/)
+**Live Demo:** https://viktors-vinogradovs.github.io/WordToChem/
 
 ## About
 
