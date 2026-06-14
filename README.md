@@ -28,7 +28,7 @@ The game features:
 
 1. **Clone the repository:**
 ```bash
-git clonehttps://github.com/Viktors-Vinogradovs/WordToChem.git
+git clone https://github.com/Viktors-Vinogradovs/WordToChem.git
 cd WordChemical
 ```
 
