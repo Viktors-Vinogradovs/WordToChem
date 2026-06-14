@@ -396,7 +396,7 @@ const T = {
     helpTitle: 'Kā spēlēt?',
     modalContent: `
       <p>Ekrānā redzēsi ķīmisko elementu nosaukumus latviešu valodā.</p>
-      <p style="margin-top:10px">Tavi uzdevums — saprast, kāds vārds ir paslēpts elementu simbolos!</p>
+      <p style="margin-top:10px">Tavs uzdevums ir saprast, kāds vārds paslēpts zem elementu simboliem!</p>
       <div class="example-box">
         <p><strong>Piemērs:</strong></p>
         <p style="font-size:1.1em">Erbijs &nbsp;+&nbsp; Sērs &nbsp;+&nbsp; Silīcijs</p>
